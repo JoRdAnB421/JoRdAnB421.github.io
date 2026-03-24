@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    ============================================================
+    PAGE: CV  (cv/index.html)
+    ============================================================
+    This page is primarily for potential employers and
+    professional contacts. It contains:
+
+    SECTIONS IN THIS FILE
+    ─────────────────────
+    1.  Page header with download button
+    2.  Experience timeline
+    3.  Education
+    4.  Skills
+    5.  Selected publications / outputs (optional)
+
+    HOW TO EDIT
+    ───────────
+    Each job, degree, or skill is clearly labelled in the HTML.
+    Search for "↓ Edit" to find every placeholder.
+    ============================================================
+  -->
+
+  <title>CV — Your Name</title>
+  <meta name="description" content="CV of Your Name — data scientist and astrophysicist. PhD in gravitational waves, Cardiff University." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Shared styles (colours, nav, footer, buttons) -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* ── CV page-specific styles ────────────────────────── */
+
+    .cv-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5.5rem clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    /* Page header — name, title, download button */
+    .cv-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--navy-mid);
+      flex-wrap: wrap;
+    }
+
+    .cv-header-left {}
+
+    .cv-page-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .cv-name {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+    }
+
+    .cv-title {
+      font-size: 1rem;
+      color: var(--text2);
+      font-weight: 300;
+    }
+
+    .cv-contacts {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .cv-contact-link {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text3);
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .cv-contact-link:hover { color: var(--gold); }
+
+    /* ── Section headings within CV ──────────────────── */
+
+    .cv-section {
+      margin-bottom: 3rem;
+    }
+
+    .cv-section-heading {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--navy-dim);
+    }
+
+    /* ── Timeline entries (experience & education) ─── */
+    /*
+      Each entry uses .cv-entry. The structure is:
+        .cv-entry-header  — title + date side by side
+        .cv-entry-org     — company or institution name
+        .cv-entry-body    — bullet points or paragraph
+    */
+
+    .cv-entry {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--navy-dim);
+    }
+    .cv-entry:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .cv-entry-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+      flex-wrap: wrap;
+    }
+
+    .cv-entry-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .cv-entry-date {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .cv-entry-org {
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+      font-style: italic;
+    }
+
+    .cv-entry-body {
+      color: var(--text2);
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+
+    .cv-entry-body ul {
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .cv-entry-body li::marker {
+      color: var(--gold);
+    }
+
+    /* ── Skills grid ──────────────────────────────────── */
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-group {}
+
+    .skill-group-title {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--navy-dim);
+      border: 1px solid var(--navy-mid);
+      color: var(--text2);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation (same on every page) -->
+  <nav>
+    <a href="../index.html" class="nav-logo">YourName<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">about</a></li>
+      <li><a href="../cv/index.html" class="active">cv</a></li>
+      <li><a href="../games/index.html">games</a></li>
+      <li><a href="../outreach/index.html">outreach</a></li>
+      <li><a href="../index.html#channels">channels</a></li>
+    </ul>
+    <a href="mailto:you@email.com" class="nav-contact">get in touch</a>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <main class="cv-wrap">
+
+    <!-- ── Page header ──────────────────────────────────── -->
+    <div class="cv-header reveal">
+      <div class="cv-header-left">
+        <p class="cv-page-label">// curriculum vitae</p>
+
+        <!-- ↓ Edit your name and title -->
+        <h1 class="cv-name">Your Name</h1>
+        <p class="cv-title">Data Scientist &amp; PhD Astrophysicist</p>
+
+        <!-- ↓ Edit your contact details -->
+        <div class="cv-contacts">
+          <a href="mailto:you@email.com" class="cv-contact-link">you@email.com</a>
+          <a href="https://github.com/yourhandle" target="_blank" rel="noopener" class="cv-contact-link">github.com/yourhandle</a>
+          <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener" class="cv-contact-link">linkedin.com/in/yourhandle</a>
+        </div>
+      </div>
+
+      <!--
+        Download button — link this to a PDF of your CV.
+        To add the PDF: put your-cv.pdf in the cv/ folder and
+        update the href below to "your-cv.pdf".
+      -->
+      <a href="your-cv.pdf" download class="btn-primary">Download PDF</a>
+    </div>
+
+
+    <!-- ── Experience ─────────────────────────────────────
+      Copy a .cv-entry block to add a new job.
+      ─────────────────────────────────────────────────── -->
+    <div class="cv-section reveal" style="--delay: 0.05s">
+      <h2 class="cv-section-heading">Experience</h2>
+
+      <!-- ↓ Edit: most recent job first -->
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-title">Data Scientist</span>
+          <!-- ↓ Edit dates -->
+          <span class="cv-entry-date">2024 — present</span>
+        </div>
+        <!-- ↓ Edit company name -->
+        <div class="cv-entry-org">Company Name, City</div>
+        <div class="cv-entry-body">
+          <!-- ↓ Replace with your actual bullet points -->
+          <ul>
+            <li>Brief description of what you do / did here</li>
+            <li>A key project or impact — be specific with numbers if you can</li>
+            <li>Technologies or methods you used</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ↓ Add more jobs by copying the block above -->
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-title">PhD Researcher — Gravitational Waves</span>
+          <span class="cv-entry-date">2019 — 2023</span>
+        </div>
+        <div class="cv-entry-org">Cardiff University, School of Physics and Astronomy</div>
+        <div class="cv-entry-body">
+          <ul>
+            <li>Doctoral research in computational astrophysics and gravitational wave data analysis</li>
+            <li>Worked with LIGO/Virgo detector data to characterise and search for signals</li>
+            <!-- ↓ Add your specific contributions -->
+            <li>Your specific research contribution or thesis topic here</li>
+            <li>Supervised undergraduate students; delivered public outreach talks throughout the PhD</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ── Education ──────────────────────────────────────
+      Same pattern as experience — copy .cv-entry to add more.
+      ─────────────────────────────────────────────────── -->
+    <div class="cv-section reveal" style="--delay: 0.1s">
+      <h2 class="cv-section-heading">Education</h2>
+
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-title">PhD, Gravitational Waves &amp; Computational Astrophysics</span>
+          <span class="cv-entry-date">2019 — 2023</span>
+        </div>
+        <div class="cv-entry-org">Cardiff University</div>
+        <div class="cv-entry-body">
+          <!-- ↓ Edit your thesis title -->
+          <p>Thesis: <em>"Your thesis title here"</em></p>
+        </div>
+      </div>
+
+      <!-- ↓ Edit your undergraduate degree -->
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <span class="cv-entry-title">BSc / MPhys Physics</span>
+          <!-- ↓ Edit dates -->
+          <span class="cv-entry-date">2015 — 2019</span>
+        </div>
+        <!-- ↓ Edit university -->
+        <div class="cv-entry-org">University Name</div>
+        <div class="cv-entry-body">
+          <!-- ↓ Edit classification if you want to include it -->
+          <p>First Class Honours (or your actual result)</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ── Skills ─────────────────────────────────────────
+      Group your skills however makes sense for you.
+      Add a new group by copying a .skill-group block.
+      ─────────────────────────────────────────────────── -->
+    <div class="cv-section reveal" style="--delay: 0.15s">
+      <h2 class="cv-section-heading">Skills</h2>
+
+      <div class="skills-grid">
+
+        <!-- ↓ Edit these skill groups and tags -->
+        <div class="skill-group">
+          <div class="skill-group-title">Data & ML</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">pandas</span>
+            <span class="skill-tag">scikit-learn</span>
+            <span class="skill-tag">PyTorch</span>
+            <span class="skill-tag">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Research & Analysis</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Signal processing</span>
+            <span class="skill-tag">Bayesian inference</span>
+            <span class="skill-tag">LaTeX</span>
+            <span class="skill-tag">MATLAB</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Game Development</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Godot 4</span>
+            <span class="skill-tag">GDScript</span>
+            <span class="skill-tag">Pixel art</span>
+            <span class="skill-tag">Game design</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Communication</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Public speaking</span>
+            <span class="skill-tag">Science communication</span>
+            <span class="skill-tag">Video production</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ── Publications (optional) ────────────────────────
+      If you have papers, list them here.
+      If not, you can delete this whole section.
+      ─────────────────────────────────────────────────── -->
+    <div class="cv-section reveal" style="--delay: 0.2s">
+      <h2 class="cv-section-heading">Selected publications</h2>
+
+      <!-- ↓ Copy this .cv-entry for each paper -->
+      <div class="cv-entry">
+        <div class="cv-entry-header">
+          <!-- ↓ Edit paper title -->
+          <span class="cv-entry-title">Your paper title here</span>
+          <!-- ↓ Edit year -->
+          <span class="cv-entry-date">2023</span>
+        </div>
+        <div class="cv-entry-org">
+          <!-- ↓ Edit: Your Name et al., Journal Name -->
+          Your Name et al. — <em>Journal of Something Astrophysical</em>
+        </div>
+        <div class="cv-entry-body">
+          <!-- ↓ Edit: add a DOI or arXiv link if you have one -->
+          <a href="https://arxiv.org/abs/yourpaperid" target="_blank" rel="noopener"
+             style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--gold);">
+            arXiv:your-paper-id ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">YourName<span class="dot">.</span></span>
+      <ul class="footer-links">
+        <li><a href="../index.html">home</a></li>
+        <li><a href="../games/index.html">games</a></li>
+        <li><a href="../outreach/index.html">outreach</a></li>
+        <li><a href="mailto:you@email.com">email</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">© 2026 Your Name</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Mobile nav
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      const open = links.style.display === 'flex';
+      links.style.cssText = open ? '' :
+        'display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;' +
+        'background:rgba(11,15,28,0.97);padding:1.25rem 1.5rem 1.5rem;gap:1rem;' +
+        'border-bottom:1px solid rgba(255,255,255,0.06)';
+    });
+  </script>
+
+</body>
+</html>

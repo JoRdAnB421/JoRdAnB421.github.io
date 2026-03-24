@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    ============================================================
+    PAGE: Homepage  (index.html)
+    ============================================================
+    This is the front door of the site. It introduces you and
+    gives visitors four clear paths:
+      → CV / professional background
+      → Game development projects
+      → Public outreach & talks
+      → YouTube & Twitch channels
+
+    SECTIONS IN THIS FILE
+    ─────────────────────
+    1.  <head>       — page metadata & font imports
+    2.  <nav>        — fixed top navigation
+    3.  #hero        — your name, tagline, four path cards
+    4.  #about       — short bio paragraph
+    5.  #highlights  — three quick-stat cards (professional snapshot)
+    6.  #channels    — Twitch + YouTube signpost
+    7.  <footer>     — links + copyright
+    8.  <script>     — scroll-reveal + nav active state logic
+    ============================================================
+  -->
+
+  <title>Your Name — Scientist · Game Dev · Communicator</title>
+  <meta name="description" content="Astrophysicist turned data scientist. PhD in gravitational waves from Cardiff. Indie game developer, public speaker, and YouTube science communicator." />
+
+  <!-- Fonts from Google Fonts (free, no account needed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- All shared styles live in style.css -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /*
+      Page-specific styles — only used on this page.
+      Shared things (nav, footer, buttons, colours) are in style.css.
+    */
+
+    /* ── Hero ────────────────────────────────────────────────── */
+
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem clamp(1.25rem, 5vw, 3rem) 5rem;
+    }
+
+    /* Faint radial glow behind the hero text */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(232, 168, 56, 0.07) 0%,
+        rgba(15, 30, 80, 0.12) 45%,
+        transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Wrap so children sit above the glow pseudo-element */
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      /* Staggered fade-in — starts invisible, CSS animation handles it */
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: #fff;
+      line-height: 1.0;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.25s forwards;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text2);
+      font-style: italic;
+      font-weight: 300;
+      max-width: 480px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    /* ── Four path cards ──────────────────────────────────── */
+    /*
+      These are the main navigation cards. Each one links to
+      a section or page. To edit a card, find its <div class="path-card">
+      below and change the icon, title, description, and href.
+    */
+
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 860px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.55s forwards;
+    }
+
+    .path-card {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.25rem 1.4rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .path-card:hover {
+      background: var(--surface2);
+      border-color: var(--gold-border);
+      transform: translateY(-3px);
+    }
+
+    .path-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.25rem;
+      line-height: 1;
+    }
+
+    .path-title {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .path-desc {
+      font-size: 0.8rem;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+
+    .path-arrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-top: auto;
+      padding-top: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .path-card:hover .path-arrow { opacity: 1; }
+
+    @media (max-width: 680px) {
+      .path-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 380px) {
+      .path-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── About section ───────────────────────────────────── */
+
+    #about { background: var(--bg2); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* The name/title column on the left */
+    .about-aside {
+      position: sticky;
+      top: 80px;
+    }
+
+    .about-name {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .about-role {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Small tag chips (skills/tools) */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--navy-dim);
+      border: 1px solid var(--navy-mid);
+      color: var(--text2);
+    }
+
+    /* The bio text on the right */
+    .about-body p {
+      color: var(--text2);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
+      font-size: 1rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+
+    .about-body strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    @media (max-width: 680px) {
+      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .about-aside { position: static; }
+    }
+
+
+    /* ── Professional highlights ─────────────────────────── */
+    /*
+      Three quick-stat cards that give employers an instant
+      snapshot. Edit the numbers and labels in the HTML below.
+    */
+
+    #highlights {
+      background: var(--bg);
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.5rem;
+    }
+
+    .highlight-number {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .highlight-label {
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    .highlight-label strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+    }
+
+    .highlights-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 580px) {
+      .highlights-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── Channels section ────────────────────────────────── */
+    /*
+      Low-key signpost to Twitch and YouTube.
+      Deliberately understated since both are early-stage.
+    */
+
+    #channels { background: var(--bg2); }
+
+    .channels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 620px;
+    }
+
+    .channel-card {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .channel-card.twitch:hover {
+      border-color: rgba(145, 70, 255, 0.45);
+      transform: translateY(-2px);
+    }
+    .channel-card.youtube:hover {
+      border-color: rgba(224, 85, 53, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .channel-platform {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .channel-card.twitch  .channel-platform { color: var(--twitch); }
+    .channel-card.youtube .channel-platform { color: var(--yt); }
+
+    .channel-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .channel-desc {
+      font-size: 0.82rem;
+      color: var(--text2);
+      line-height: 1.55;
+    }
+
+    .channel-link {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text3);
+      margin-top: 0.5rem;
+      transition: color 0.2s;
+    }
+    .channel-card:hover .channel-link { color: var(--text2); }
+
+    @media (max-width: 480px) {
+      .channels-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── Keyframe animations ──────────────────────────────── */
+    /* Used by the hero elements only — rest of site uses scroll-reveal */
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+    NAVIGATION
+    To change your name in the logo, edit "YourName" below.
+    To add or remove nav links, edit the <li> items.
+    ============================================================ -->
+  <nav>
+    <a href="index.html" class="nav-logo">YourName<span class="dot">.</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="cv/index.html">cv</a></li>
+      <li><a href="games/index.html">games</a></li>
+      <li><a href="outreach/index.html">outreach</a></li>
+      <li><a href="#channels">channels</a></li>
+    </ul>
+
+    <a href="mailto:you@email.com" class="nav-contact">get in touch</a>
+
+    <!-- Mobile hamburger button (links hidden on mobile) -->
+    <div class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+    HERO
+    Edit your tagline in .hero-tagline.
+    Edit the four path cards in .path-grid — each .path-card has:
+      .path-icon   — emoji or character
+      .path-title  — short heading
+      .path-desc   — one sentence
+      href         — where the card links to
+    ============================================================ -->
+  <section id="hero">
+    <div class="hero-content">
+
+      <p class="hero-eyebrow">astrophysicist &nbsp;·&nbsp; data scientist &nbsp;·&nbsp; game developer</p>
+
+      <!-- ↓ Change this to your actual name -->
+      <h1 class="hero-name">Your Name</h1>
+
+      <!-- ↓ This is your one-sentence pitch — make it yours -->
+      <p class="hero-tagline">
+        A scientist who builds things — models, games, and an audience.
+      </p>
+
+      <!-- Four path cards — one per audience/interest -->
+      <div class="path-grid">
+
+        <!-- Card 1: CV / professional -->
+        <a href="cv/index.html" class="path-card">
+          <div class="path-icon">📊</div>
+          <div class="path-title">Data Science &amp; Research</div>
+          <div class="path-desc">PhD in gravitational waves. Now working in data science.</div>
+          <div class="path-arrow">View CV →</div>
+        </a>
+
+        <!-- Card 2: Game dev -->
+        <a href="games/index.html" class="path-card">
+          <div class="path-icon">🎮</div>
+          <div class="path-title">Game Development</div>
+          <div class="path-desc">Indie games made in Godot. Projects on itch.io.</div>
+          <div class="path-arrow">See projects →</div>
+        </a>
+
+        <!-- Card 3: Outreach -->
+        <a href="outreach/index.html" class="path-card">
+          <div class="path-icon">🎙</div>
+          <div class="path-title">Public Outreach</div>
+          <div class="path-desc">Talks, events, and a growing YouTube channel on astrophysics.</div>
+          <div class="path-arrow">See talks →</div>
+        </a>
+
+        <!-- Card 4: Channels -->
+        <a href="#channels" class="path-card">
+          <div class="path-icon">📡</div>
+          <div class="path-title">Twitch &amp; YouTube</div>
+          <div class="path-desc">Occasional dev streams and science explainer videos.</div>
+          <div class="path-arrow">Find me →</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+
+  <!-- ============================================================
+    ABOUT
+    Edit the bio paragraphs below — write in first person.
+    The tags on the left are your skills/tools — add or remove
+    them by copying or deleting a <span class="tag"> element.
+    ============================================================ -->
+  <section id="about" class="section-wrap">
+    <div class="section-inner">
+
+      <div class="about-inner">
+
+        <!-- Left column: name, role, and skill tags -->
+        <div class="about-aside reveal">
+          <div class="about-name">Your Name</div>
+          <div class="about-role">Data Scientist &amp; PhD Astrophysicist</div>
+
+          <!-- ↓ Edit these tags to match your actual skills -->
+          <div class="tag-list">
+            <span class="tag">Python</span>
+            <span class="tag">Machine learning</span>
+            <span class="tag">Data analysis</span>
+            <span class="tag">Gravitational waves</span>
+            <span class="tag">Godot 4</span>
+            <span class="tag">GDScript</span>
+            <span class="tag">Signal processing</span>
+            <span class="tag">Cardiff PhD</span>
+            <span class="tag">Public speaking</span>
+          </div>
+        </div>
+
+        <!-- Right column: bio paragraphs -->
+        <div class="about-body reveal" style="--delay: 0.1s">
+
+          <!-- ↓ Replace these paragraphs with your own words -->
+          <p>
+            I'm a <strong>data scientist</strong> with a PhD in
+            <strong>computational astrophysics and gravitational waves</strong>
+            from Cardiff University. My research involved digging into LIGO data
+            — the kind of signals that tell us two black holes just collided a
+            billion light-years away.
+          </p>
+
+          <p>
+            These days I work in data science, but the curiosity that drove the
+            PhD never really switched off. I make <strong>indie games</strong>
+            in my spare time — mostly small, atmospheric things built in Godot —
+            and I do <strong>public science talks</strong> whenever I get the
+            chance, including at Pints of Knowledge events in London.
+          </p>
+
+          <p>
+            I'm also building a <strong>YouTube channel</strong> on astrophysics:
+            plain-English explainers on black holes, dark matter, gravitational
+            waves, and whatever else I'm currently obsessing over. And occasionally
+            I stream dev work on Twitch because it turns out having an audience
+            makes you actually finish things.
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+
+  <!-- ============================================================
+    PROFESSIONAL HIGHLIGHTS
+    These three cards give a quick snapshot for anyone considering
+    you professionally. Edit the numbers and labels below.
+    The full CV is at cv/index.html.
+    ============================================================ -->
+  <section id="highlights" class="section-wrap">
+    <div class="section-inner">
+
+      <p class="section-label reveal">// professional snapshot</p>
+      <h2 class="section-title reveal">At a glance</h2>
+
+      <div class="highlights-grid">
+
+        <!-- ↓ Edit the number and text in each card -->
+        <div class="highlight-card reveal" style="--delay: 0s">
+          <div class="highlight-number">PhD</div>
+          <div class="highlight-label">
+            <strong>Gravitational Waves</strong>
+            Computational astrophysics, Cardiff University
+          </div>
+        </div>
+
+        <div class="highlight-card reveal" style="--delay: 0.1s">
+          <!-- ↓ Change this to the number of talks you've given -->
+          <div class="highlight-number">15+</div>
+          <div class="highlight-label">
+            <strong>Public talks given</strong>
+            PhD outreach, Pints of Knowledge London, and more
+          </div>
+        </div>
+
+        <div class="highlight-card reveal" style="--delay: 0.2s">
+          <!-- ↓ Change to however many itch.io projects you have -->
+          <div class="highlight-number">3</div>
+          <div class="highlight-label">
+            <strong>Games on itch.io</strong>
+            Indie projects built in Godot, plus one in active development
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Call-to-action buttons below the cards -->
+      <div class="highlights-cta reveal" style="--delay: 0.3s">
+        <a href="cv/index.html" class="btn-primary">View full CV</a>
+        <a href="outreach/index.html" class="btn-outline">See outreach work</a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+
+  <!-- ============================================================
+    CHANNELS
+    Update the href links to your actual Twitch and YouTube URLs.
+    The descriptions are deliberately low-key since both are new.
+    ============================================================ -->
+  <section id="channels" class="section-wrap">
+    <div class="section-inner">
+
+      <p class="section-label reveal">// find me online</p>
+      <h2 class="section-title reveal">Channels</h2>
+      <p class="section-sub reveal">
+        Both early-stage and growing. Twitch is where I stream dev work;
+        YouTube is where the astrophysics explainers will live.
+      </p>
+
+      <div class="channels-grid">
+
+        <!-- ↓ Update href to your actual Twitch URL -->
+        <a href="https://twitch.tv/yourhandle" target="_blank" rel="noopener" class="channel-card twitch reveal">
+          <div class="channel-platform">Twitch</div>
+          <div class="channel-title">Dev streams</div>
+          <!-- ↓ Edit your typical streaming schedule -->
+          <div class="channel-desc">
+            Occasional streams of game dev and side-project work.
+            Good for accountability, better for chat.
+          </div>
+          <div class="channel-link">twitch.tv/yourhandle ↗</div>
+        </a>
+
+        <!-- ↓ Update href to your actual YouTube URL -->
+        <a href="https://youtube.com/@yourhandle" target="_blank" rel="noopener" class="channel-card youtube reveal" style="--delay: 0.1s">
+          <div class="channel-platform">YouTube</div>
+          <div class="channel-title">Astrophysics explainers</div>
+          <div class="channel-desc">
+            Plain-English videos on black holes, gravitational waves,
+            and whatever corner of the cosmos I'm currently in.
+          </div>
+          <div class="channel-link">youtube.com/@yourhandle ↗</div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+    FOOTER
+    Update the links and your name/year below.
+    ============================================================ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">YourName<span class="dot">.</span></span>
+
+      <ul class="footer-links">
+        <li><a href="cv/index.html">CV</a></li>
+        <li><a href="games/index.html">Games</a></li>
+        <li><a href="outreach/index.html">Outreach</a></li>
+        <li><a href="https://github.com/yourhandle" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://twitch.tv/yourhandle" target="_blank" rel="noopener">Twitch</a></li>
+        <li><a href="https://youtube.com/@yourhandle" target="_blank" rel="noopener">YouTube</a></li>
+        <li><a href="mailto:you@email.com">Email</a></li>
+      </ul>
+    </div>
+    <!-- ↓ Update year and your name -->
+    <p class="footer-copy">© 2026 Your Name — built and hosted on GitHub Pages</p>
+  </footer>
+
+
+  <!-- ============================================================
+    JAVASCRIPT
+    This small script does two things:
+      1. Scroll-reveal: watches for elements with class "reveal"
+         and adds class "visible" when they enter the viewport,
+         triggering the CSS fade-up animation in style.css.
+      2. Nav active state: highlights the correct nav link
+         based on which section is currently on screen.
+
+    You shouldn't need to edit this.
+    ============================================================ -->
+  <script>
+    // 1 — Scroll reveal
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target); // only animate once
+        }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 2 — Highlight active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 80) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active',
+          a.getAttribute('href') === '#' + current ||
+          a.getAttribute('href') === current + '/index.html'
+        );
+      });
+    });
+
+    // 3 — Mobile nav toggle
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      const open = links.style.display === 'flex';
+      links.style.cssText = open ? '' :
+        'display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;' +
+        'background:rgba(11,15,28,0.97);padding:1.25rem 1.5rem 1.5rem;gap:1rem;' +
+        'border-bottom:1px solid rgba(255,255,255,0.06)';
+    });
+  </script>
+
+</body>
+</html>

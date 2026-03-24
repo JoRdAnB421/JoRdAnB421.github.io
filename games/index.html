@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    ============================================================
+    PAGE: Games  (games/index.html)
+    ============================================================
+    Lists your itch.io projects and any work-in-progress games.
+
+    HOW TO ADD A GAME
+    ─────────────────
+    Find the .games-grid section below and copy one .game-card
+    block. Fill in:
+      - The banner colour classes (or add your own screenshot)
+      - The status tag (Released / In development / Game jam)
+      - The title, engine, description
+      - The itch.io link
+    ============================================================
+  -->
+
+  <title>Games — Your Name</title>
+  <meta name="description" content="Indie games by Your Name. Built in Godot. Available on itch.io." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+
+    .page-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5.5rem clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    /* ── Game cards ────────────────────────────────────── */
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .game-card {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .game-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+    }
+
+    /*
+      .game-banner is the top coloured area of each card.
+      If you have a screenshot, replace the background colour
+      with: background: url('../assets/images/game-name.png') center/cover;
+    */
+    .game-banner {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+    }
+
+    /* Colour themes for each banner — edit or add your own */
+    .banner-space   { background: linear-gradient(135deg, #07091a 0%, #111a38 100%); }
+    .banner-dungeon { background: linear-gradient(135deg, #0f0a1a 0%, #1e1035 100%); }
+    .banner-green   { background: linear-gradient(135deg, #061208 0%, #0e2414 100%); }
+
+    /* Subtle inner border/glow at the bottom of the banner */
+    .game-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--surface));
+    }
+
+    .game-body {
+      padding: 1.25rem 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    /* Status tag — Released / In development / Game jam */
+    .game-status {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 5px;
+      width: fit-content;
+    }
+    .status-released   { background: var(--gold-dim);   color: var(--gold);   border: 1px solid var(--gold-border); }
+    .status-wip        { background: rgba(46,204,113,0.1); color: #2ecc71;      border: 1px solid rgba(46,204,113,0.3); }
+    .status-jam        { background: rgba(139,92,246,0.1); color: #a78bfa;     border: 1px solid rgba(139,92,246,0.3); }
+
+    .game-title {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .game-engine {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+    }
+
+    .game-desc {
+      font-size: 0.875rem;
+      color: var(--text2);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .game-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+      margin-top: auto;
+      border-top: 1px solid var(--navy-dim);
+    }
+
+    .game-link {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--gold);
+      transition: color 0.2s;
+    }
+    .game-link:hover { color: #fff; }
+
+    .game-tags {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .game-tag {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--navy-dim);
+      color: var(--text3);
+      border: 1px solid var(--navy-dim);
+    }
+
+    /* ── In-progress callout ────────────────────────────── */
+    /*
+      A separate callout for your current active project
+      (the one you're building with your friend).
+    */
+
+    .wip-callout {
+      margin-top: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+    }
+
+    .wip-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .wip-title {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .wip-desc {
+      font-size: 0.9rem;
+      color: var(--text2);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">YourName<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">about</a></li>
+      <li><a href="../cv/index.html">cv</a></li>
+      <li><a href="../games/index.html" class="active">games</a></li>
+      <li><a href="../outreach/index.html">outreach</a></li>
+      <li><a href="../index.html#channels">channels</a></li>
+    </ul>
+    <a href="mailto:you@email.com" class="nav-contact">get in touch</a>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main class="page-wrap">
+
+    <p class="section-label reveal">// game development</p>
+    <h1 class="section-title reveal">Games</h1>
+    <!-- ↓ Edit this subtitle -->
+    <p class="section-sub reveal">
+      Indie games I've made in my spare time, mostly in Godot 4.
+      No big studios, no game engines I didn't choose myself — just
+      projects I wanted to exist and had to build to find out if they worked.
+    </p>
+
+
+    <!-- ── Game cards grid ──────────────────────────────
+      ↓ Edit each .game-card or copy one to add a new game.
+      ─────────────────────────────────────────────────── -->
+    <div class="games-grid">
+
+      <!-- Game 1 — edit everything below -->
+      <div class="game-card reveal">
+        <!--
+          Replace the emoji and banner-space class with a screenshot:
+          <div class="game-banner" style="background: url('../assets/images/game1.png') center/cover;">
+        -->
+        <div class="game-banner banner-space">🚀</div>
+        <div class="game-body">
+          <!-- ↓ Change status: status-released / status-wip / status-jam -->
+          <span class="game-status status-released">Released</span>
+          <!-- ↓ Edit game title -->
+          <h2 class="game-title">Your Game Title</h2>
+          <div class="game-engine">Godot 4 · GDScript</div>
+          <!-- ↓ Edit description — 2–3 sentences -->
+          <p class="game-desc">
+            A short description of what this game is, what makes it interesting,
+            and roughly how long it takes to play or what genre it is.
+          </p>
+          <div class="game-footer">
+            <!-- ↓ Edit href to your itch.io link -->
+            <a href="https://yourhandle.itch.io/game-name" target="_blank" rel="noopener" class="game-link">
+              Play on itch.io ↗
+            </a>
+            <!-- ↓ Edit tags -->
+            <div class="game-tags">
+              <span class="game-tag">2D</span>
+              <span class="game-tag">Puzzle</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 2 -->
+      <div class="game-card reveal" style="--delay: 0.1s">
+        <div class="game-banner banner-dungeon">⚔️</div>
+        <div class="game-body">
+          <span class="game-status status-jam">Game jam</span>
+          <h2 class="game-title">Another Game Title</h2>
+          <div class="game-engine">Godot 4 · GDScript</div>
+          <p class="game-desc">
+            Description of your second game. Mention the game jam if relevant
+            — 48-hour entries are impressive and worth saying so.
+          </p>
+          <div class="game-footer">
+            <a href="https://yourhandle.itch.io/game-name-2" target="_blank" rel="noopener" class="game-link">
+              Play on itch.io ↗
+            </a>
+            <div class="game-tags">
+              <span class="game-tag">Jam</span>
+              <span class="game-tag">Platformer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 3 — add as many as you need -->
+      <div class="game-card reveal" style="--delay: 0.2s">
+        <div class="game-banner banner-green">🌿</div>
+        <div class="game-body">
+          <span class="game-status status-released">Released</span>
+          <h2 class="game-title">Third Game Title</h2>
+          <div class="game-engine">Godot 4 · GDScript</div>
+          <p class="game-desc">
+            Description of your third game here.
+          </p>
+          <div class="game-footer">
+            <a href="https://yourhandle.itch.io/game-name-3" target="_blank" rel="noopener" class="game-link">
+              Play on itch.io ↗
+            </a>
+            <div class="game-tags">
+              <span class="game-tag">Exploration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- ── Current project callout ───────────────────────
+      This highlights your active WIP game (the one with your friend).
+      Edit the title and description below.
+      ─────────────────────────────────────────────────── -->
+    <div class="wip-callout reveal">
+      <div class="wip-label">// currently in development</div>
+      <!-- ↓ Edit your WIP game title -->
+      <h2 class="wip-title">Untitled Project</h2>
+      <!-- ↓ Edit the description — keep it a bit mysterious if you prefer -->
+      <p class="wip-desc">
+        A collaborative project I'm building with a friend. Still in early
+        development — more details to come. Follow me on Twitch if you want
+        to watch it being built in real time.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">YourName<span class="dot">.</span></span>
+      <ul class="footer-links">
+        <li><a href="../index.html">home</a></li>
+        <li><a href="../cv/index.html">cv</a></li>
+        <li><a href="../outreach/index.html">outreach</a></li>
+        <li><a href="https://yourhandle.itch.io" target="_blank" rel="noopener">itch.io</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">© 2026 Your Name</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      const open = links.style.display === 'flex';
+      links.style.cssText = open ? '' :
+        'display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;' +
+        'background:rgba(11,15,28,0.97);padding:1.25rem 1.5rem 1.5rem;gap:1rem;' +
+        'border-bottom:1px solid rgba(255,255,255,0.06)';
+    });
+  </script>
+
+</body>
+</html>

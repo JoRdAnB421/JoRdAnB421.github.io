@@ -1,0 +1,413 @@
+/*
+  ============================================================
+  style.css  —  Shared styles for all pages
+  ============================================================
+
+  TABLE OF CONTENTS
+  -----------------
+  1.  Design tokens (colours, fonts, spacing)
+  2.  Reset & base
+  3.  Navigation
+  4.  Buttons
+  5.  Section shared helpers
+  6.  Footer
+  7.  Scroll-reveal animation
+  8.  Responsive overrides
+
+  HOW COLOURS WORK
+  ----------------
+  All colours are defined as CSS variables at the top of this
+  file under ":root". If you want to tweak any colour across
+  the whole site, you only need to change it in ONE place here.
+
+  The palette:
+    --bg          darkest background (page base)
+    --bg2         slightly lighter (alternating sections)
+    --surface     card / panel backgrounds
+    --navy        mid-tone navy (borders, dividers)
+    --gold        the amber/gold accent — used sparingly
+    --text        primary body text (off-white)
+    --text2       secondary / muted text
+
+  ============================================================
+*/
+
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+
+:root {
+  /* --- Backgrounds --- */
+  --bg:        #0b0f1c;   /* deepest navy — page background */
+  --bg2:       #0f1525;   /* slightly lighter — alternating sections */
+  --surface:   #151d35;   /* card / panel surfaces */
+  --surface2:  #1c2640;   /* hovered or elevated cards */
+
+  /* --- Navy scale (borders, dividers, subtle elements) --- */
+  --navy-dim:  rgba(255, 255, 255, 0.05);
+  --navy-mid:  rgba(255, 255, 255, 0.09);
+  --navy-hi:   rgba(255, 255, 255, 0.16);
+
+  /* --- Gold accent --- */
+  --gold:      #e8a838;   /* main accent — headings, highlights, tags */
+  --gold-dim:  rgba(232, 168, 56, 0.12);
+  --gold-border: rgba(232, 168, 56, 0.30);
+
+  /* --- Platform colours (used in channel cards only) --- */
+  --twitch:    #9146FF;
+  --twitch-dim:rgba(145, 70, 255, 0.10);
+  --yt:        #e05535;
+  --yt-dim:    rgba(224, 85, 53, 0.10);
+
+  /* --- Text --- */
+  --text:      #dce4f5;   /* primary text */
+  --text2:     #7e8fac;   /* muted / secondary text */
+  --text3:     #3d4f6a;   /* very muted — hints, placeholders */
+
+  /* --- Spacing & shape --- */
+  --radius:    8px;
+  --radius-lg: 14px;
+  --max-w:     1060px;    /* max content width */
+
+  /* --- Fonts --- */
+  --font-head: 'Syne', sans-serif;       /* headings — geometric, distinctive */
+  --font-body: 'Literata', serif;        /* body — warm, readable, slightly editorial */
+  --font-mono: 'JetBrains Mono', monospace; /* code, labels, tags */
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle dot-grid background texture — the "data aesthetic" */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+/* All page content sits above the dot grid */
+nav, main, footer, .page-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Scrollbar — subtle, matches the theme */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+
+
+/* ============================================================
+   3. NAVIGATION
+   ============================================================ */
+
+/*
+  The nav is fixed to the top so it stays visible as you scroll.
+  backdrop-filter gives the frosted-glass effect over content below.
+*/
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+  background: rgba(11, 15, 28, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--navy-dim);
+  z-index: 200;
+}
+
+/* Logo / site name — change "YourName" in the HTML */
+.nav-logo {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.nav-logo .dot { color: var(--gold); }
+
+/* Desktop nav links */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text2);
+  text-transform: lowercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--gold); }
+
+/* "Get in touch" button in the nav */
+.nav-contact {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  transition: background 0.2s, color 0.2s;
+}
+.nav-contact:hover {
+  background: var(--gold-dim);
+}
+
+/* Mobile hamburger — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--text2);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================ */
+
+/*
+  Two button styles used across the site:
+    .btn-primary  — filled gold, for the main call-to-action
+    .btn-outline  — bordered, for secondary actions
+*/
+
+.btn-primary,
+.btn-outline {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 11px 26px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--bg);
+  border: 1px solid var(--gold);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 168, 56, 0.30);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--navy-hi);
+}
+.btn-outline:hover {
+  border-color: var(--gold-border);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   5. SECTION SHARED HELPERS
+   ============================================================ */
+
+/*
+  .section-wrap  — standard section padding + centred max-width
+  .section-label — small mono label above headings (e.g. "// about")
+  .section-title — the main heading in each section
+  .section-sub   — the subtitle / lead paragraph below a heading
+*/
+
+.section-wrap {
+  padding: clamp(4rem, 9vw, 7rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.section-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  opacity: 0.85;
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.section-sub {
+  font-size: 1rem;
+  color: var(--text2);
+  max-width: 520px;
+  margin-bottom: 3rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* Thin horizontal rule between sections */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--navy-dim);
+  margin: 0;
+}
+
+
+/* ============================================================
+   6. FOOTER
+   ============================================================ */
+
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--navy-dim);
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 5vw, 3rem) 2rem;
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-logo {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.footer-logo .dot { color: var(--gold); }
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text2);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text3);
+  width: 100%;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--navy-dim);
+  margin-top: 1rem;
+}
+
+
+/* ============================================================
+   7. SCROLL-REVEAL ANIMATION
+   ============================================================ */
+
+/*
+  Elements with class "reveal" start invisible and slide up
+  into view when they enter the viewport. The JavaScript at
+  the bottom of each page handles adding the "visible" class.
+
+  To make an element animate in, just add class="reveal" to it.
+  Add a delay with style="--delay: 0.1s" etc.
+*/
+
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease var(--delay, 0s),
+              transform 0.6s ease var(--delay, 0s);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   8. RESPONSIVE OVERRIDES
+   ============================================================ */
+
+@media (max-width: 720px) {
+  /* Hide desktop nav links, show hamburger */
+  .nav-links,
+  .nav-contact { display: none; }
+  .nav-hamburger { display: flex; }
+}

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    ============================================================
+    PAGE: Outreach  (outreach/index.html)
+    ============================================================
+    This page showcases your public science communication work —
+    talks, events, and your YouTube channel.
+
+    HOW TO ADD A TALK
+    ─────────────────
+    Find the .talks-list section and copy one .talk-entry block.
+    Fill in the event name, date, location, and description.
+    ============================================================
+  -->
+
+  <title>Outreach — Your Name</title>
+  <meta name="description" content="Public science talks and outreach by Your Name — astrophysicist and science communicator. Pints of Knowledge, university outreach, and YouTube." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+
+    .page-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 5.5rem clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    /* ── Two-column layout: talks left, YouTube right ─── */
+
+    .outreach-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 720px) {
+      .outreach-grid { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    /* ── Talks list ─────────────────────────────────────── */
+
+    .talks-heading {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--navy-dim);
+    }
+
+    .talks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /*
+      Each talk is a .talk-entry. The layout is:
+        Left:  event name + description
+        Right: date + location
+    */
+    .talk-entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem 2rem;
+      align-items: start;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--navy-dim);
+    }
+    .talk-entry:first-child { padding-top: 0; }
+    .talk-entry:last-child  { border-bottom: none; }
+
+    .talk-left {}
+
+    .talk-event {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .talk-title {
+      font-size: 0.85rem;
+      color: var(--text2);
+      font-style: italic;
+      margin-bottom: 0.45rem;
+    }
+
+    .talk-desc {
+      font-size: 0.82rem;
+      color: var(--text3);
+      line-height: 1.6;
+    }
+
+    .talk-right {
+      text-align: right;
+      min-width: 90px;
+    }
+
+    .talk-date {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .talk-location {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text3);
+      letter-spacing: 0.04em;
+      margin-top: 0.2rem;
+      white-space: nowrap;
+    }
+
+    /* ── YouTube sidebar ────────────────────────────────── */
+
+    .yt-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+
+    .yt-heading {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--yt);
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--navy-dim);
+    }
+
+    /* Card for the YouTube channel */
+    .yt-card {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    /* Placeholder thumbnail area */
+    .yt-thumb {
+      height: 110px;
+      background: linear-gradient(135deg, #0d0714 0%, #180e2e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .yt-card-body {
+      padding: 1rem 1.1rem 1.2rem;
+    }
+
+    .yt-card-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--yt);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .yt-card-title {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+
+    .yt-card-desc {
+      font-size: 0.78rem;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* "Coming soon" overlay on placeholder videos */
+    .yt-coming-soon {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .yt-subscribe {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #fff;
+      background: var(--yt);
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 1rem;
+      width: fit-content;
+    }
+    .yt-subscribe:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    /* ── Why outreach — intro blurb ─────────────────────── */
+
+    .outreach-intro {
+      background: var(--surface);
+      border: 1px solid var(--navy-mid);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+      font-size: 0.95rem;
+      color: var(--text2);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">YourName<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">about</a></li>
+      <li><a href="../cv/index.html">cv</a></li>
+      <li><a href="../games/index.html">games</a></li>
+      <li><a href="../outreach/index.html" class="active">outreach</a></li>
+      <li><a href="../index.html#channels">channels</a></li>
+    </ul>
+    <a href="mailto:you@email.com" class="nav-contact">get in touch</a>
+    <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <main class="page-wrap">
+
+    <p class="section-label reveal">// science communication</p>
+    <h1 class="section-title reveal">Outreach &amp; Talks</h1>
+    <p class="section-sub reveal">
+      Making astrophysics make sense — in pubs, lecture theatres,
+      and eventually on YouTube.
+    </p>
+
+    <!-- ↓ Edit this quote or remove the whole block if you prefer -->
+    <div class="outreach-intro reveal">
+      "I got into outreach during my PhD because I thought it was unfair that
+      such genuinely strange and beautiful science was locked behind journal
+      paywalls and jargon. I still think that."
+    </div>
+
+    <div class="outreach-grid">
+
+      <!-- ── Talks column ──────────────────────────────── -->
+      <div class="talks-col reveal">
+        <h2 class="talks-heading">// talks &amp; events</h2>
+
+        <div class="talks-list">
+
+          <!--
+            ↓ Copy a .talk-entry block for each talk you've given.
+              Most recent first. Remove the talk-title line if your
+              talk didn't have a separate title.
+          -->
+
+          <!-- Talk 1 — most recent -->
+          <div class="talk-entry">
+            <div class="talk-left">
+              <!-- ↓ Edit event name -->
+              <div class="talk-event">Pints of Knowledge</div>
+              <!-- ↓ Edit talk title — or remove this line -->
+              <div class="talk-title">"Your talk title here"</div>
+              <!-- ↓ Edit description — 1 sentence is fine -->
+              <div class="talk-desc">
+                Short description of what the talk covered and the audience.
+              </div>
+            </div>
+            <div class="talk-right">
+              <!-- ↓ Edit date and location -->
+              <div class="talk-date">2025</div>
+              <div class="talk-location">London, UK</div>
+            </div>
+          </div>
+
+          <!-- Talk 2 -->
+          <div class="talk-entry">
+            <div class="talk-left">
+              <div class="talk-event">Pints of Knowledge</div>
+              <div class="talk-title">"Another talk title"</div>
+              <div class="talk-desc">
+                Short description here.
+              </div>
+            </div>
+            <div class="talk-right">
+              <div class="talk-date">2025</div>
+              <div class="talk-location">London, UK</div>
+            </div>
+          </div>
+
+          <!-- Talk 3 — PhD era outreach -->
+          <div class="talk-entry">
+            <div class="talk-left">
+              <!-- ↓ Edit to match your PhD outreach events -->
+              <div class="talk-event">Cardiff University Open Day</div>
+              <div class="talk-title">"What are gravitational waves?"</div>
+              <div class="talk-desc">
+                Public talk for prospective students and families during the
+                School of Physics and Astronomy open day.
+              </div>
+            </div>
+            <div class="talk-right">
+              <div class="talk-date">2022</div>
+              <div class="talk-location">Cardiff, UK</div>
+            </div>
+          </div>
+
+          <!--
+            Keep adding talk entries here.
+            You can list them all — a long list of talks
+            is a strong signal to anyone reading professionally.
+          -->
+
+        </div>
+      </div>
+
+      <!-- ── YouTube sidebar ───────────────────────────── -->
+      <div class="yt-sidebar reveal" style="--delay: 0.1s">
+        <h2 class="yt-heading">// youtube</h2>
+
+        <!-- Channel intro card -->
+        <div class="yt-card">
+          <div class="yt-thumb">🔭</div>
+          <div class="yt-card-body">
+            <div class="yt-card-label">Channel</div>
+            <!-- ↓ Edit your channel name -->
+            <div class="yt-card-title">Your Channel Name</div>
+            <div class="yt-card-desc">
+              Plain-English astrophysics. Black holes, gravitational waves,
+              dark matter — no degree required.
+            </div>
+            <div class="yt-coming-soon">First video coming soon</div>
+          </div>
+        </div>
+
+        <!--
+          Planned videos card — gives people a reason to subscribe
+          even before you've posted anything.
+        -->
+        <div class="yt-card">
+          <div class="yt-card-body">
+            <div class="yt-card-label">Coming up</div>
+            <div class="yt-card-title">What's in the pipeline</div>
+            <div class="yt-card-desc">
+              <!-- ↓ Edit these planned topics -->
+              Episodes planned on: gravitational waves (how LIGO actually works),
+              black hole thermodynamics, the cosmic distance ladder, and more.
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscribe button -->
+        <a href="https://youtube.com/@yourhandle" target="_blank" rel="noopener" class="yt-subscribe">
+          ▶ &nbsp; Subscribe on YouTube
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">YourName<span class="dot">.</span></span>
+      <ul class="footer-links">
+        <li><a href="../index.html">home</a></li>
+        <li><a href="../cv/index.html">cv</a></li>
+        <li><a href="../games/index.html">games</a></li>
+        <li><a href="https://youtube.com/@yourhandle" target="_blank" rel="noopener">youtube</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">© 2026 Your Name</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.getElementById('hamburger').addEventListener('click', () => {
+      const links = document.querySelector('.nav-links');
+      const open = links.style.display === 'flex';
+      links.style.cssText = open ? '' :
+        'display:flex;flex-direction:column;position:absolute;top:58px;left:0;right:0;' +
+        'background:rgba(11,15,28,0.97);padding:1.25rem 1.5rem 1.5rem;gap:1rem;' +
+        'border-bottom:1px solid rgba(255,255,255,0.06)';
+    });
+  </script>
+
+</body>
+</html>
