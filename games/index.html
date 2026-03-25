@@ -21,8 +21,8 @@
     ============================================================
   -->
 
-  <title>Games — Your Name</title>
-  <meta name="description" content="Indie games by Your Name. Built in Godot. Available on itch.io." />
+  <title>Games — Jordan Barber</title>
+  <meta name="description" content="Indie games by Your Jordan Barber. Built in Godot &amp; Unity. Available on itch.io." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -179,6 +179,10 @@
       border-left: 3px solid var(--gold);
       border-radius: var(--radius-lg);
       padding: 1.75rem 2rem;
+
+      display: flex;
+      gap: 2rem;
+      align-items: center;
     }
 
     .wip-label {
@@ -218,7 +222,7 @@
       <li><a href="../outreach/index.html">outreach</a></li>
       <li><a href="../index.html#channels">channels</a></li>
     </ul>
-    <a href="mailto:you@email.com" class="nav-contact">get in touch</a>
+    <a href="jordanb421@outlook.com" class="nav-contact">get in touch</a>
     <div class="nav-hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </nav>
 
@@ -228,9 +232,10 @@
     <h1 class="section-title reveal">Games</h1>
     <!-- ↓ Edit this subtitle -->
     <p class="section-sub reveal">
-      Indie games I've made in my spare time, mostly in Godot 4.
-      No big studios, no game engines I didn't choose myself — just
-      projects I wanted to exist and had to build to find out if they worked.
+      Indie games I've made in my spare time, mostly in Godot 4 with a bit of Unity. So far some small projects
+      to help build my knowledge base before moving onto more ambitious projects. Currently have 3 "finished" projects
+      on itch.io with 2 more larger projects in active development. The idea is to learn something new with these projects
+      and so they are all built without genAI.
     </p>
 
 
@@ -245,27 +250,27 @@
           Replace the emoji and banner-space class with a screenshot:
           <div class="game-banner" style="background: url('../assets/images/game1.png') center/cover;">
         -->
-        <div class="game-banner banner-space">🚀</div>
+        <div class="game-banner banner-space" 
+        style="background: url('../assests/Checkers.png') center/cover;"></div>
         <div class="game-body">
           <!-- ↓ Change status: status-released / status-wip / status-jam -->
           <span class="game-status status-released">Released</span>
           <!-- ↓ Edit game title -->
-          <h2 class="game-title">Your Game Title</h2>
-          <div class="game-engine">Godot 4 · GDScript</div>
+          <h2 class="game-title">Simple Checkers</h2>
+          <div class="game-engine">Pygame</div>
           <!-- ↓ Edit description — 2–3 sentences -->
           <p class="game-desc">
-            A short description of what this game is, what makes it interesting,
-            and roughly how long it takes to play or what genre it is.
+            A 2-player game of checkers built in PyGame. 
           </p>
           <div class="game-footer">
             <!-- ↓ Edit href to your itch.io link -->
-            <a href="https://yourhandle.itch.io/game-name" target="_blank" rel="noopener" class="game-link">
+            <a href="https://jbgaming2.itch.io/simple-checkers" target="_blank" rel="noopener" class="game-link">
               Play on itch.io ↗
             </a>
             <!-- ↓ Edit tags -->
             <div class="game-tags">
-              <span class="game-tag">2D</span>
-              <span class="game-tag">Puzzle</span>
+              <span class="game-tag">2-player</span>
+              <span class="game-tag">Strategy</span>
             </div>
           </div>
         </div>
@@ -273,22 +278,23 @@
 
       <!-- Game 2 -->
       <div class="game-card reveal" style="--delay: 0.1s">
-        <div class="game-banner banner-dungeon">⚔️</div>
+        <div class="game-banner banner-dungeon"
+        style="background: url(../assests/rocket.png) center/cover;"></div>
         <div class="game-body">
-          <span class="game-status status-jam">Game jam</span>
-          <h2 class="game-title">Another Game Title</h2>
-          <div class="game-engine">Godot 4 · GDScript</div>
+          <span class="game-status status-released">Released</span>
+          <h2 class="game-title">Rocket Boost</h2>
+          <div class="game-engine">Unity</div>
           <p class="game-desc">
-            Description of your second game. Mention the game jam if relevant
-            — 48-hour entries are impressive and worth saying so.
+            Simple, short obstacle game. Try and navigate your rocket through the cave without
+            crashing.
           </p>
           <div class="game-footer">
-            <a href="https://yourhandle.itch.io/game-name-2" target="_blank" rel="noopener" class="game-link">
-              Play on itch.io ↗
+            <a href="https://jbgaming2.itch.io/rocket-boost" target="_blank" rel="noopener" class="game-link">
+              Download executable on itch.io ↗
             </a>
             <div class="game-tags">
-              <span class="game-tag">Jam</span>
-              <span class="game-tag">Platformer</span>
+              <span class="game-tag">Obstacle course</span>
+              <span class="game-tag">Side Scroller</span>
             </div>
           </div>
         </div>
@@ -296,20 +302,23 @@
 
       <!-- Game 3 — add as many as you need -->
       <div class="game-card reveal" style="--delay: 0.2s">
-        <div class="game-banner banner-green">🌿</div>
+        <div class="game-banner banner-green" 
+        style="background: url(../assests/cave-delver.png) center/cover;"></div>
         <div class="game-body">
           <span class="game-status status-released">Released</span>
-          <h2 class="game-title">Third Game Title</h2>
-          <div class="game-engine">Godot 4 · GDScript</div>
+          <h2 class="game-title">Cave Delver</h2>
+          <div class="game-engine">Unity</div>
           <p class="game-desc">
-            Description of your third game here.
+            Make your way through this cavern, fighting off enemies and trying to find the exit! 
           </p>
           <div class="game-footer">
-            <a href="https://yourhandle.itch.io/game-name-3" target="_blank" rel="noopener" class="game-link">
+            <a href="https://jbgaming2.itch.io/cave-delver" target="_blank" rel="noopener" class="game-link">
               Play on itch.io ↗
             </a>
             <div class="game-tags">
               <span class="game-tag">Exploration</span>
+              <span class="game-tag">FPS</span>
+              <span class="game-tag">Sci-Fi</span>
             </div>
           </div>
         </div>
@@ -319,34 +328,38 @@
 
 
     <!-- ── Current project callout ───────────────────────
-      This highlights your active WIP game (the one with your friend).
+      This highlights your active WIP game
       Edit the title and description below.
       ─────────────────────────────────────────────────── -->
     <div class="wip-callout reveal">
-      <div class="wip-label">// currently in development</div>
+      <div class="wip-label">// currently in early development</div>
       <!-- ↓ Edit your WIP game title -->
-      <h2 class="wip-title">Untitled Project</h2>
+      <h2 class="wip-title">Coastal walking simulator</h2>
       <!-- ↓ Edit the description — keep it a bit mysterious if you prefer -->
       <p class="wip-desc">
-        A collaborative project I'm building with a friend. Still in early
-        development — more details to come. Follow me on Twitch if you want
-        to watch it being built in real time.
+        A short 3D walking simulator set in in a coastal cottage inspired by Irish coastal country side.
+        The game is being built in Godot and will focus on atmosphere and environment centered around a 
+        compelling narrative driven story. 
       </p>
+      <img 
+        src="../assests/coastal-cottage.jpg"
+        alt="Screenshot of work in progress game"
+        style="width: 260px; border-radius: 8px; flex-shrink: 0;">
     </div>
 
   </main>
 
   <footer>
     <div class="footer-inner">
-      <span class="footer-logo">YourName<span class="dot">.</span></span>
+      <span class="footer-logo">JordanBarber<span class="dot">.</span></span>
       <ul class="footer-links">
         <li><a href="../index.html">home</a></li>
         <li><a href="../cv/index.html">cv</a></li>
         <li><a href="../outreach/index.html">outreach</a></li>
-        <li><a href="https://yourhandle.itch.io" target="_blank" rel="noopener">itch.io</a></li>
+        <li><a href="https://jbgaming2.itch.io/" target="_blank" rel="noopener">itch.io</a></li>
       </ul>
     </div>
-    <p class="footer-copy">© 2026 Your Name</p>
+    <p class="footer-copy">© 2026 Jordan Barber</p>
   </footer>
 
   <script>
