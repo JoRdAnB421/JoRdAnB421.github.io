@@ -172,18 +172,33 @@
       (the one you're building with your friend).
     */
 
-    .wip-callout {
+    /* Outer wrapper — just holds the heading and stacks games vertically */
+    .wip-section {
       margin-top: 3rem;
       background: var(--surface);
       border: 1px solid var(--navy-mid);
       border-left: 3px solid var(--gold);
       border-radius: var(--radius-lg);
       padding: 1.75rem 2rem;
-
       display: flex;
-      flex-wrap: wrap;        /* wraps to a new line instead of squishing */
-      gap: 2rem;
-      align-items: center;
+      flex-direction: column;  /* stacks the heading and each game vertically */
+      gap: 1.75rem;
+    }
+
+    /* Each individual game — title + description on the left, image on the right */
+    .wip-entry {
+      display: flex;
+      flex-wrap: wrap;         /* drops to vertical on narrow screens automatically */
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--navy-dim); /* subtle divider between games */
+    }
+
+    /* The text column grows to fill available space */
+    .wip-text {
+      flex: 1;
+      min-width: 200px;        /* won't shrink below this before wrapping */
     }
 
     .wip-label {
@@ -332,21 +347,44 @@
       This highlights your active WIP game
       Edit the title and description below.
       ─────────────────────────────────────────────────── -->
-    <div class="wip-callout reveal">
+    <!-- Outer container: just the heading and a list of games -->
+    <div class="wip-section reveal">
       <div class="wip-label">// currently in early development</div>
-      <!-- ↓ Edit your WIP game title -->
-      <h2 class="wip-title">Coastal walking simulator</h2>
-      <!-- ↓ Edit the description — keep it a bit mysterious if you prefer -->
-      <p class="wip-desc">
-        A short 3D walking simulator set in in a coastal cottage inspired by Irish coastal country side.
-        The game is being built in Godot 4.5 and will focus on atmosphere and environment, centered around a 
-        compelling, narrative driven story. 
-      </p>
-      <img 
-        src="../assests/coastal-cottage.jpg"
-        alt="Screenshot of work in progress game"
-        style="width: 260px; max-width: 100%; border-radius: 8px; 
-        flex-shrink: 0; flex-grow: 1;">
+
+      <!-- Game 1 — copy this whole .wip-entry block to add more games -->
+      <div class="wip-entry">
+        <div class="wip-text">
+          <h2 class="wip-title">Coastal walking simulator</h2>
+          <p class="wip-desc">
+            A short 3D walking simulator set in a coastal cottage inspired by 
+            Irish coastal countryside. Built in Godot 4.5, focusing on atmosphere 
+            and environment, centred around a compelling narrative-driven story.
+          </p>
+        </div>
+        <img
+          src="../assests/coastal-cottage.jpg"
+          alt="Screenshot of Coastal walking simulator"
+          style="width: 260px; max-width: 100%; border-radius: 8px; flex-shrink: 0;"
+        />
+      </div>
+
+      <!-- Game 2 -->
+      <div class="wip-entry">
+        <div class="wip-text">
+          <h2 class="wip-title">Spellbound Dungeon</h2>
+          <p class="wip-desc">
+            A 2D pixel art puzzle game built in Godot 4.5. You play as a wizard trying to escape 
+            several layers of a dungeon. You learn new spells along the way to solve 
+            progressively more complicated puzzle rooms. Will you escape?
+          </p>
+        </div>
+        <img
+          src="../assests/spellbound_dungeon_screenshot.png"
+          alt="Screenshot of Spellbound Dungeon"
+          style="width: 260px; max-width: 100%; border-radius: 8px; flex-shrink: 0;"
+        />
+      </div>
+
     </div>
 
   </main>
