@@ -181,6 +181,7 @@
       padding: 1.75rem 2rem;
 
       display: flex;
+      flex-wrap: wrap;        /* wraps to a new line instead of squishing */
       gap: 2rem;
       align-items: center;
     }
@@ -214,7 +215,7 @@
 <body>
 
   <nav>
-    <a href="../index.html" class="nav-logo">YourName<span class="dot">.</span></a>
+    <a href="../index.html" class="nav-logo">JordanBarber<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="../index.html#about">about</a></li>
       <li><a href="../cv/index.html">cv</a></li>
@@ -338,13 +339,14 @@
       <!-- ↓ Edit the description — keep it a bit mysterious if you prefer -->
       <p class="wip-desc">
         A short 3D walking simulator set in in a coastal cottage inspired by Irish coastal country side.
-        The game is being built in Godot and will focus on atmosphere and environment centered around a 
-        compelling narrative driven story. 
+        The game is being built in Godot 4.5 and will focus on atmosphere and environment, centered around a 
+        compelling, narrative driven story. 
       </p>
       <img 
         src="../assests/coastal-cottage.jpg"
         alt="Screenshot of work in progress game"
-        style="width: 260px; border-radius: 8px; flex-shrink: 0;">
+        style="width: 260px; max-width: 100%; border-radius: 8px; 
+        flex-shrink: 0; flex-grow: 1;">
     </div>
 
   </main>
